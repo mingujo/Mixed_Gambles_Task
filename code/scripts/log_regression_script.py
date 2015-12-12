@@ -38,7 +38,6 @@ subject_list = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15
 images_paths = ['ds005_sub' + s.zfill(3) +'_log_reg_behav' for s in subject_list]
 
 fig = plt.figure()
-fig.suptitle("Fitted Logistic Regression Line (1(gamble) 0(not gamble) with gain and loss values", fontsize=12)
 for i,subject in enumerate(subject_list):
 	behav_df = load_in_dataframe(subject)
 	add_lambda = add_gainlossratio(behav_df)
@@ -50,8 +49,9 @@ for i,subject in enumerate(subject_list):
 	intercept = -logit_pars['Intercept'] / logit_pars['gain']
 	slope = -logit_pars['loss'] / logit_pars['gain']
 		#fig = plt.figure(figsize = (10, 8))   
-	ax = plt.subplot("44%s"%(str(i+1)))
-	ax.set_title("Subject_%s_run001"%(str(i+1)))
+	ax = fig.add_subplot(4, 4, i+1) 
+	ax.set_title("Subject_%s_run001"%(str(i+1)), fontsize =10)
+	ax.set_axis_bgcolor('white')
 
 	# plot gain and loss for respcat = 1(decides to gamble)
 	l1 = ax.plot(behav_df[behav_df['respcat'] == 1].values[:,2], behav_df[behav_df['respcat'] == 1].values[:,1], '.', label = "Gamble", mfc = 'None', mec='red')
@@ -60,14 +60,19 @@ for i,subject in enumerate(subject_list):
 	l2 = ax.plot(behav_df[behav_df['respcat'] == 0].values[:,2], behav_df[behav_df['respcat'] == 0].values[:,1], '.', label = "Not gamble", mfc = 'None', mec='blue')
 
 	# draw regression line
-	plt.plot(behav_df['loss'], intercept + slope * behav_df['loss'],'-', color = 'green') 
+	ax.plot(behav_df['loss'], intercept + slope * behav_df['loss'],'-', color = 'green') 
 
-	ax.xlabel('Loss ($)')
-	ax.ylabel('Gain ($)')
-	plt.axis([2, 23, 8, 41])
-	plt.title("Subject_%s_Fitted Logistic Regression Line (1(gamble) 0(not gamble) with gain and loss values)\n"%(images_paths[i]))
+	ax.set_xlabel('Loss ($)', fontsize =10)
+	ax.set_ylabel('Gain ($)', fontsize =10)
+	ax.set_xlim([2,23])
+	ax.set_ylim([8,41])
+	ax.tick_params(axis='x', labelsize=10)
+	ax.tick_params(axis='y', labelsize=10)
 	
-fig.legend((l1,l2), ('Gamble','Not Gamble', loc = 'lower right')
-plt.savefig(dirs[3]+'/log_regression_behav_subplots')
+fig.legend((l1,l2), ('Gamble','Not Gamble'), loc = 'lower right')
+fig.tight_layout()
+fig.subplots_adjust(top=0.85)
+fig.suptitle("Fitted Logistic Regression Line (1(gamble) 0(not gamble) with gain and loss values\n", fontsize=12)
+fig.savefig(dirs[1]+'/log_regression_behav_subplots.png',facecolor='white', edgecolor='white')
 
 
