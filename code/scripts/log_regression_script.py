@@ -12,7 +12,7 @@ This script outputs plots for each subject and combine them into one image of su
 from __future__ import absolute_import, division, print_function
 import sys, os
 #TODO : later change this
-sys.path.append(os.path.join(os.path.dirname(__file__), "../utils"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "../"))
 import numpy as np
 import numpy as np
 import matplotlib.pyplot as plt
