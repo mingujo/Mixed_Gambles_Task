@@ -71,7 +71,7 @@ for i,subject in enumerate(subject_list):
 	
 fig.legend((l1,l2), ('Gamble','Not Gamble'), loc = 'lower right')
 fig.tight_layout()
-fig.subplots_adjust(top=0.85)
+fig.subplots_adjust(top=0.90)
 fig.suptitle("Fitted Logistic Regression Line (1(gamble) 0(not gamble) with gain and loss values\n", fontsize=12)
 fig.savefig(dirs[1]+'/log_regression_behav_subplots.png',facecolor='white', edgecolor='white')
 
