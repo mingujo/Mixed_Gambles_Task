@@ -65,8 +65,19 @@ def test_organize_columns():
 
 
 def test_log_regression():
+	"""Tests the results of logistic regression.
+	Explore on the beta coefficient
 
+	"""
+	run = load_in_dataframe(2)
+	run_added = add_gainlossratio(run)
+	run_final = organize_columns(run_added)
 
-
+	#fit the logistic regression line
+	fitted = logit("respcat ~ gain + loss", run_final).fit()
+	#get the parameters
+	fitted_params = fitted.params.as_matrix()
+	test_fitted_params = log_regression(run_final).as_matrix()
+	assert_array_equal(fitted_params,test_fitted_params)
 
 
