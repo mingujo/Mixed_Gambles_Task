@@ -60,7 +60,7 @@ def test_organize_columns():
 	# drop error(rescap=-1) in experiment
 	run_final = run_organized.drop(run_organized[run_organized.respcat == -1].index) 
 	test_run_final = organize_columns(run).as_matrix()
-	assert_array_equal(run_final.as_matrix(),test_run_added_ratio)
+	assert_array_equal(run_final.as_matrix(),test_run_final)
 
 
 
@@ -77,7 +77,7 @@ def test_log_regression():
 	fitted = logit("respcat ~ gain + loss", run_final).fit()
 	#get the parameters
 	fitted_params = fitted.params.as_matrix()
-	test_fitted_params = log_regression(run_final).as_matrix()
+	test_fitted_params = log_regression(run_final).params.as_matrix()
 	assert_array_equal(fitted_params,test_fitted_params)
 
 
