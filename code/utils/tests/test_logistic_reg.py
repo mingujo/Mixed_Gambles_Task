@@ -45,6 +45,24 @@ def test_organize_columns():
 
 	"""
 
+	run = load_in_dataframe(2)
+	run_added = add_gainlossratio(run)
+	a = run_added.drop('onset', 1) 
+	# drop PTval column
+	run_organized = a.drop('PTval', 1) 
+	# get the column names
+	cols = run_organized.columns.tolist() 
+	# put respcat column into front
+	cols.insert(0, cols.pop(cols.index('respcat'))) 
+	cols.insert(3, cols.pop(cols.index('ratio')))
+	# reorganize
+	run_organized = run_organized.reindex(columns= cols) 
+	# drop error(rescap=-1) in experiment
+	run_final = run_organized.drop(run_organized[run_organized.respcat == -1].index) 
+	test_run_final = organize_columns(run).as_matrix()
+	assert_array_equal(run_final.as_matrix(),test_run_added_ratio)
+
+
 
 def test_log_regression():
 
